@@ -1,0 +1,3 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang
+OCESN,"SNCF",http://www.ter-sncf.com,Europe/Paris,fr
+OCENI,"-",http://www.ter-sncf.com,Europe/Paris,fr
