@@ -13,11 +13,22 @@ crossorigin="">
 </script>
 
 
-
+<div style="margin:10 50 50 50;"> 
 <h3> Train et vélo non démonté : quelles options pour une escapade de folie ? </h3>
 
-<div id="map" style="height: 800px;"></div>
+<div id="map" style="height: 700px;"></div>
 
+<p> Cette page cartographie les différents trajets pouvant être faits en train avec un vélo non démonté. 
+	Elle a été créée à partir des données gtfs fournies par la SNCF ici : 
+	<a href="https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified" > https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified  </a></p>
+
+<p> Vous pouvez retrouver les traitement appliqués sur les données initiales et faire vos suggestions d'amélioration directement dans le repo du projet :
+	<a href=" https://github.com/alice-dub/velosncf" >  https://github.com/alice-dub/velosncf</a> </p>
+
+<p> Pour l'instant il n'y a pas d'affichage des TGVs car je n'ai pas trouvé comment avoir accès à cette information : toute idée est bienvenue ! </p>
+
+
+</div>
 <script>
 var mymap = L.map('map').setView([48, 3], 6);
 var selected = null;
