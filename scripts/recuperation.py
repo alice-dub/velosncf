@@ -61,7 +61,7 @@ def recup_gares(type_train, filtre_velo=False):
 
     ref_trajet = {}
     for route, trajets in voyages.items():
-        if type_train == "TER": #On cleane le fichier uniquement pour les TERS : pour les intercitée et les tgv on doit garder les differentes branches possibles
+        if True == False: #On cleane le fichier uniquement pour les TERS : pour les intercitée et les tgv on doit garder les differentes branches possibles
             arret_max = 0
             trajet_max = ""
             for trajet in trajets:
@@ -324,7 +324,7 @@ def creation_geojson(listes_coordonnes, nom, type_train):
         json.dump(geojson, fp)
 
 if __name__ == '__main__':
-    type_train = "TGV"
+    type_train = "TER"
     coords, nom = recup_gares(type_train)
     creation_geojson(coords, nom, type_train)
     

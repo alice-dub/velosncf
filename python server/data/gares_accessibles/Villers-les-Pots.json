@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"stop_name": "Villers-les-Pots", "type": "Gare s\u00e9lectionn\u00e9e"}, "geometry": {"type": "Point", "coordinates": [5.347963, 47.206732]}}, {"type": "Feature", "properties": {"stop_name": "Auxonne", "type": "Gare accessible"}, "geometry": {"type": "Point", "coordinates": [5.377356, 47.192668]}}]}
