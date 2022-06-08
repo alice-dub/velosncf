@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Maps from './Maps'
 
-export default function Stops_nom({ setActiveCategory, activeCategory, type}) {
+export default function Stops_nom({setActiveCategory, activeCategory, type}) {
   const [data, setData] = useState([]);
-  const [filtre, setFiltre] = useState("Paris Austerlitz");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
