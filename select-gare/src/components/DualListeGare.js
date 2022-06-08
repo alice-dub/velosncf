@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import ListeGare from './ListeGare'
-import Maps from './Maps'
+
 
 function DualListeGare() {
 	const [activeDepart, setActiveDepart] = useState('Paris Austerlitz')
