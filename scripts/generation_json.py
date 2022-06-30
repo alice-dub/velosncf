@@ -46,9 +46,10 @@ for stop_name in stop_names:
         carac_route = {}
         carac_route["type"] = "Feature"
         carac_route["properties"] = {}
+        carac_route["properties"]["start"] = stop_name
         carac_route["properties"]["stop_name"] = stop_name
         carac_route["properties"]["type"] = "Gare sélectionnée"
-        carac_route["properties"]["icone"] = "Icon2"
+        carac_route["properties"]["iconstarte"] = "Icon2"
         carac_route["geometry"] = {}
         carac_route["geometry"]["type"] = "Point"
         carac_route["geometry"]["coordinates"] = coordonnees
@@ -58,6 +59,7 @@ for stop_name in stop_names:
             carac_route = {}
             carac_route["type"] = "Feature"
             carac_route["properties"] = {}
+            carac_route["properties"]["start"] = stop_name
             carac_route["properties"]["stop_name"] = gare
             carac_route["properties"]["type"] = "Gare accessible"
             carac_route["properties"]["icone"] = "Icon1"
