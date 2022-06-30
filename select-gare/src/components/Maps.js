@@ -69,19 +69,20 @@ class Maps extends React.Component {
   fetchGares(filtre) {
     console.log(encodeURIComponent(filtre))
     this.setState({
-      data: "",
+      data: [],
     });
-    fetch(`data/gares_accessibles/${encodeURIComponent(filtre)}.json`)
-    . then(res => res.json())
-     .then(json => {
-          console.log(json)
-          this.setState({
-            data: json,
-          });
-      })
-      .catch(err => console.error(err));
-    console.log("l")
-    console.log(this.state.data)
+    for(let i = 0; i < filtre.length; i++){
+      fetch(`data/gares_accessibles/${encodeURIComponent(filtre[i].stop_name)}.json`)
+      . then(res => res.json())
+       .then(json => {
+            console.log(json)
+            this.setState({
+              data: [...this.state.data, json]
+            });
+        })
+        .catch(err => console.error(err));
+    }
+
   }
   render() {
   return (

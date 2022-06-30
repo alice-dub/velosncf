@@ -39,8 +39,9 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
                 <div>{` ${error}`}</div>
                 )}
   <Autocomplete
-    disablePortal
-    value={activeCategory}
+    multiple
+    limitTags={2}
+    defaultValue={activeCategory}
     onChange={(event: any, newValue: string | null) => {
       setActiveCategory(newValue);
     }}
@@ -50,7 +51,7 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
       <TextField {...params} label= {type} margin="normal" />
     )}/>
 		    <Maps
-			    filter = {activeCategory.stop_name}/>
+			    filter = {activeCategory}/>
     </div>
   );
 }
