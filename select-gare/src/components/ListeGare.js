@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 import Maps from './Maps'
 
 export default function Stops_nom({setActiveCategory, activeCategory, type}) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(['Paris Austerlitz']);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,33 +23,34 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
         setData(null);
+        setError(err.message);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
-
+  console.log("data")
+  console.log(activeCategory)
   return (
     <div>
-      <h3> {type} </h3>
       {loading && <div>Chargement des données</div>}
       {error && (
-        <div>{` ${error}`}</div>
-      )}
-			<select
-				value={activeCategory}
-				onChange={(e) => setActiveCategory(e.target.value)}>
-        {data &&
-          data.map(({ stop_name}) => (
-            <option key={stop_name}>
-              {stop_name}
-            </option>
-          ))}
-			</select>
+                <div>{` ${error}`}</div>
+                )}
+  <Autocomplete
+    disablePortal
+    value={activeCategory}
+    onChange={(event: any, newValue: string | null) => {
+      setActiveCategory(newValue);
+    }}
+    options={data}
+    getOptionLabel={data => data.stop_name}
+    renderInput={params => (
+      <TextField {...params} label= {type} margin="normal" />
+    )}/>
 		    <Maps
-			    filter = {activeCategory}/>
+			    filter = {activeCategory.stop_name}/>
     </div>
   );
 }
