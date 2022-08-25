@@ -2,6 +2,8 @@
 
 Le but de ce projet ? Une carte de France avec tous les trajets en train accessibles avec un vélo non démonté !
 
+Une version est disponible en ligne sur https://trainvelo.succo.fr/
+
 Ce projet s'appuie sur les GTFS téléchargeables depuis le portail opendata de la SNCF :  https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified
 
 Mais comment passer d'un GTFS à une carte lisible et pas trop surchargée ? 
