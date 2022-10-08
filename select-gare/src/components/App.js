@@ -5,20 +5,13 @@ import DualListeGare from './DualListeGare'
 
 function App() {
 	const styles = {
-		container: {
-		  display: 'flex',
-		  flex: 1,
-		  flexDirection: 'row',
-		  flexWrap: 'wrap',
-		  alignItems: 'flex-start' // if you want to fill rows left to right
-		},
 		item: {
-		  width: '80%' // is 50% of container width
+		  margin: '5%' // is 50% of container width
 		}
 	  }
     const [activeDepart, setActiveDepart] = useState('')
     return (
-    <div style={{marginLeft:"5%"}} >
+    <div>
         <Banner />
         <div style={styles.container}>
 		<div style={styles.item}>

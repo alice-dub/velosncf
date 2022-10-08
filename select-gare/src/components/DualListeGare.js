@@ -9,7 +9,7 @@ function DualListeGare() {
 		<ListeGare
 			setActiveCategory = {setActiveDepart}
 			activeCategory = {activeDepart}
-			type="Choix de la gare 🚉"/>
+			type="Choix des gares 🚉"/>
 	</div>
 	)
 }

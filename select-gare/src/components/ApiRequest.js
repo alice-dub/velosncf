@@ -9,10 +9,6 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import api from './utils/api';
 
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
-const GOOGLE_MAPS_API_KEY = 'AIzaSyC3aviU6KHXAjoSnxcw6qbOhjnFctbxPkE';
-
 function loadScript(src, position, id) {
   if (!position) {
     return;
@@ -70,7 +66,8 @@ export default function ApiRequest() {
 
   return (
     <Autocomplete
-      id="google-map-demo"
+      id="ban-api"
+      noOptionsText={'Pas de résultats trouvés'}
       sx={{ width: 300 }}
       getOptionLabel={(option) =>
         option.properties.label
@@ -89,10 +86,9 @@ export default function ApiRequest() {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth />
+        <TextField {...params} label="Choix de l'adresse 📍" />
       )}
       renderOption={(props, option) => {
-        console.log(option)
         const matches = option.properties.label;
 
         return (

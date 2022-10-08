@@ -39,7 +39,11 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
       {error && (
                 <div>{` ${error}`}</div>
                 )}
+  <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
+  <p> Je veux les gares à moins de XX km de : </p>
   <ApiRequest/>
+
+  <h4> Sélection de gares </h4>
   <Autocomplete
     multiple
     limitTags={2}
