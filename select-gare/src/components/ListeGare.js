@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import Maps from './Maps'
+import ApiRequest from './ApiRequest'
 
 export default function Stops_nom({setActiveCategory, activeCategory, type}) {
   const [data, setData] = useState(['Paris Austerlitz']);
@@ -38,6 +39,7 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
       {error && (
                 <div>{` ${error}`}</div>
                 )}
+  <ApiRequest/>
   <Autocomplete
     multiple
     limitTags={2}
