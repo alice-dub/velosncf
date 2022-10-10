@@ -41,9 +41,9 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
                 )}
   <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
   <p> Je veux les gares à moins de <input type="number" id="quantity" name="quantity" min="5" max="50" value="20" size="5"></input> km de : </p>
-  <div style={{"display":"flex", "flex-direction":"row"}}>
+  <div style={{"display":"flex", "flexDirection":"row"}}>
   <ApiRequest/>
-  <button class="button">Filtre</button>
+  <button className="button">Filtre</button>
   </div>
   <h4> Sélection de gares </h4>
   <Autocomplete

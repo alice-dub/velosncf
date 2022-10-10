@@ -2,6 +2,8 @@ import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from 'react-leaflet'
 import { useState, useEffect } from "react";
 import L from 'leaflet'
 import React from 'react';
+import rails from './rails.json'
+import { height } from '@mui/system';
 
 const position = [47, 3]
 
@@ -67,6 +69,7 @@ class Maps extends React.Component {
   }
 
   fetchGares(filtre) {
+    console.log(rails)
     console.log(encodeURIComponent(filtre))
     this.setState({
       data: [],
@@ -84,6 +87,7 @@ class Maps extends React.Component {
     }
 
   }
+  
   render() {
   return (
     <MapContainer center={position} zoom={6}>
@@ -91,6 +95,7 @@ class Maps extends React.Component {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <GeoJSON data={rails} interactive={false} style={feature => ({ color: "grey", weight:"2"})}/>
       <GeoJSON key={this.state.data} data={this.state.data} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
     </MapContainer>
   )
