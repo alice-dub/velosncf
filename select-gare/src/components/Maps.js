@@ -32,7 +32,7 @@ return L.marker(latlng, {
 }
 
 function choix_icone(choix) {
-  if (choix == "Icon1") {
+  if (choix == "TER") {
     return Icon1
   }
   else {

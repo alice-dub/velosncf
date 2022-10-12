@@ -27,7 +27,6 @@ export default function ApiRequest({filterOrigin}) {
         .then((res) => setOptions(res.features));
 
     }
-
     fetch({ input: inputValue }, (results) => {
       if (active) {
         let newOptions = [];
@@ -58,7 +57,7 @@ export default function ApiRequest({filterOrigin}) {
     <Autocomplete
       id="ban-api"
       noOptionsText={'Pas de résultats trouvés'}
-      sx={{ width: 300 }}
+      sx={{ width: 600 }}
       getOptionLabel={(option) =>
         option.properties.label
       }
@@ -80,8 +79,13 @@ export default function ApiRequest({filterOrigin}) {
         <TextField {...params} label="Choix de l'adresse 📍" />
       )}
       renderOption={(props, option) => {
-        const matches = option.properties.label;
-
+        var matches = ""
+        if (option.properties.type == "municipality") {
+          var matches = option.properties.postcode + ' ' + option.properties.label;
+        } 
+        else {
+          var matches = option.properties.label;
+        }
         return (
           <li {...props}>
             <Grid container alignItems="center">

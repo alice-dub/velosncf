@@ -62,7 +62,7 @@ for stop_name in stop_names:
             carac_route["properties"]["start"] = stop_name
             carac_route["properties"]["stop_name"] = gare
             carac_route["properties"]["type"] = "Gare accessible"
-            carac_route["properties"]["icone"] = "Icon1"
+            carac_route["properties"]["icone"] = "TER"
             carac_route["geometry"] = {}
             carac_route["geometry"]["type"] = "Point"
             carac_route["geometry"]["coordinates"] = [data[data["stop_name"] == gare]["stop_lon"].iloc[0],\

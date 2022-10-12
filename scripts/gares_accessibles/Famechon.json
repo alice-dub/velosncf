@@ -1,1 +1,0 @@
-{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"stop_name": "Famechon", "type": "Gare s\u00e9lectionn\u00e9e"}, "geometry": {"type": "Point", "coordinates": [2.043403, 49.767552]}}, {"type": "Feature", "properties": {"stop_name": "Poix-de-Picardie", "type": "Gare accessible"}, "geometry": {"type": "Point", "coordinates": [1.989813, 49.777856]}}]}
