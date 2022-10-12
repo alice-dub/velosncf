@@ -9,21 +9,8 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 import api from './utils/api';
 
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
 
-  const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.setAttribute('id', id);
-  script.src = src;
-  position.appendChild(script);
-}
-
-const autocompleteService = { current: null };
-
-export default function ApiRequest() {
+export default function ApiRequest({filterOrigin}) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -41,6 +28,7 @@ export default function ApiRequest() {
         api
         .get(`https://api-adresse.data.gouv.fr/search/?q=${inputValue}`)
         .then((res) => setOptions(res.features));
+
     }
 
     fetch({ input: inputValue }, (results) => {
@@ -58,11 +46,16 @@ export default function ApiRequest() {
         setOptions(newOptions);
       }
     });
-
+    
     return () => {
       active = false;
     };
+    
   }, [value, inputValue, fetch]);
+
+  function updateValue(value) {
+    filterOrigin(value)
+  };
 
   return (
     <Autocomplete
@@ -81,6 +74,7 @@ export default function ApiRequest() {
       onChange={(event, newValue) => {
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
+        updateValue(newValue);
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

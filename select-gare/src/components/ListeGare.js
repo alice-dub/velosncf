@@ -6,9 +6,13 @@ import ApiRequest from './ApiRequest'
 
 export default function Stops_nom({setActiveCategory, activeCategory, type}) {
   const [data, setData] = useState(['Paris Austerlitz']);
+  const [filter, setFilter] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const filterOrigin = (filter) => {
+    setFilter(filter);
+  };
   useEffect(() => {
     fetch(`data/liste_station.json`)
       .then((response) => {
@@ -33,6 +37,7 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
   }, []);
   console.log("data")
   console.log(activeCategory)
+  console.log(filter)
   return (
     <div>
       {loading && <div>Chargement des données</div>}
@@ -42,7 +47,7 @@ export default function Stops_nom({setActiveCategory, activeCategory, type}) {
   <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
   <p> Je veux les gares à moins de <input type="number" id="quantity" name="quantity" min="5" max="50" value="20" size="5"></input> km de : </p>
   <div style={{"display":"flex", "flexDirection":"row"}}>
-  <ApiRequest/>
+  <ApiRequest filterOrigin={filterOrigin}/>
   <button className="button">Filtre</button>
   </div>
   <h4> Sélection de gares </h4>
