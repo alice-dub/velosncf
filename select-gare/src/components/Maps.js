@@ -62,15 +62,12 @@ class Maps extends React.Component {
   // setState() can't be called in componentDidUpdate()
   componentDidUpdate(prevProps) {
     if (this.props.filter !== prevProps.filter) {
-      console.log("ici")
       this.fetchGares(this.props.filter);
     }
     
   }
 
   fetchGares(filtre) {
-    console.log(rails)
-    console.log(encodeURIComponent(filtre))
     this.setState({
       data: [],
     });
@@ -78,7 +75,6 @@ class Maps extends React.Component {
       fetch(`data/gares_accessibles/${encodeURIComponent(filtre[i].stop_name)}.json`)
       . then(res => res.json())
        .then(json => {
-            console.log(json)
             this.setState({
               data: [...this.state.data, json]
             });
