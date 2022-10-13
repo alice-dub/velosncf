@@ -43,7 +43,11 @@ function choix_icone(choix) {
 
 function onEachFeature(feature, layer) {
   if (feature.properties) {
-      layer.bindPopup(feature.properties.stop_name);
+      layer.bindPopup(
+        "Gare : " + feature.properties.stop_name
+         + "<br> Gare de départ : " + feature.properties.start
+         + "<br> Moyen de transport : " + feature.properties.icone
+        );
   }
 }
 
