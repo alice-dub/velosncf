@@ -10,7 +10,7 @@ liste_moyens = ["TER", "TGV", "intercite", "transilien", "carTER"]
 
 mise_en_forme = {"TER" : "🚲 ❤️ Train TER 🚆",\
                 "TGV" : "🚲 💔 TGV 🚄",\
-                "intercite":"🚲 ❤️ Train TER 🚆",\
+                "intercite":"🚲 ❤️ Intercité 🚆",\
                 "transilien":"🚲 ❤️ Transilien 🚆",\
                 "carTER": "🚲 💔 Car TER 🚍"}
 data_index = None
