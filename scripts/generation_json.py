@@ -35,6 +35,8 @@ for moyen in liste_moyens:
         data_times = data_times[data_times["route_type"]==3]
     elif moyen == "TER":
         data_times = data_times[data_times["route_type"]==2]
+        print(data_times[data_times["stop_id"]=="StopPoint:OCECar-87725705"])
+        print(data_times[data_times["stop_id"]=="StopPoint:OCECar TER-87725705"])
     liste_noms = []
 
     for stop_name in stop_names:
@@ -93,9 +95,19 @@ for moyen in liste_moyens:
 
     if data_index is None:
         data_index = data[data["stop_name"].isin(liste_noms)][["stop_name", "stop_lon", "stop_lat"]].drop_duplicates().sort_values(by="stop_name")
+        data_index["transport"] = moyen
     else: 
         data_index2 = data[data["stop_name"].isin(liste_noms)][["stop_name", "stop_lon", "stop_lat"]].drop_duplicates().sort_values(by="stop_name")
+        data_index2["transport"] = moyen
         data_index = pd.concat([data_index,data_index2]).drop_duplicates().reset_index(drop=True)
 
+
+data_index_final = data_index[["stop_name", "transport"]].drop_duplicates().groupby('stop_name')['transport'].apply(list).reset_index(name='transport')
+data_index_final2 = data_index.groupby('stop_name').agg(stop_lon=('stop_lon', 'mean'), stop_lat=('stop_lat', 'mean')).reset_index()
+print(data_index_final)
+print(data_index_final2)
+data_index_final3 = pd.merge(data_index_final2, data_index_final, on="stop_name", how="inner")
+print(data_index_final3)
+
 with open('liste_station.json'.format(id), 'wt', encoding='utf8') as fp:
-        data_index.to_json(fp, orient="records", force_ascii=False)
+        data_index_final3.to_json(fp, orient="records", force_ascii=False)
