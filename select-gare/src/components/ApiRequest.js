@@ -11,7 +11,6 @@ export default function ApiRequest({filterOrigin}) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
-  const loaded = React.useRef(false);
 
   React.useEffect(() => {
     let active = true;
@@ -47,7 +46,7 @@ export default function ApiRequest({filterOrigin}) {
       active = false;
     };
     
-  }, [value, inputValue, fetch]);
+  }, [value, inputValue]);
 
   function updateValue(value) {
     filterOrigin(value)
@@ -80,11 +79,11 @@ export default function ApiRequest({filterOrigin}) {
       )}
       renderOption={(props, option) => {
         var matches = ""
-        if (option.properties.type == "municipality") {
-          var matches = option.properties.postcode + ' ' + option.properties.label;
-        } 
+        if (option.properties.type === "municipality") {
+          matches = option.properties.postcode + ' ' + option.properties.label;
+        }
         else {
-          var matches = option.properties.label;
+          matches = option.properties.label;
         }
         return (
           <li {...props}>

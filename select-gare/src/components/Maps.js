@@ -63,7 +63,6 @@ class Maps extends React.Component {
 
   componentDidMount() {
     this.fetchGares(this.props.filter);
-    console.log(this.props.recherche)
   }
 
   // setState() can't be called in componentDidUpdate()
@@ -133,14 +132,7 @@ class Maps extends React.Component {
     }
   }
 
-  render() { 
-    console.log(this.props.recherche[2])
-    let circle = this.props.recherche[2] != 0?  <Circle
-    center={this.props.recherche.slice(0,2)}
-    pathOptions={{ fillColor: 'blue' }}
-    radius={this.props.recherche[2]*1000}
-/> :  <></>
-console.log(circle)
+  render() {
   return (
     <MapContainer center={position} zoom={6}>
       <TileLayer

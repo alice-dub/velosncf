@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Maps from './Maps'
 import ApiRequest from './ApiRequest'
@@ -27,15 +27,14 @@ export default function Stops_nom({type}) {
   }
 
   function calculFiltre() {
-    if (filter.length == 0) {
+    if (filter.length === 0) {
       setInfo(" Veuillez renseigner une adresse pour pouvoir filtrer les gares à proximité");
       setRecherche([0, 0 ,0])
     }
     else {
       setInfo("")
-      console.log(filter)
       const [long, lat] = filter.geometry.coordinates
-      setRecherche(Array(lat, long, distance))
+      setRecherche([lat, long, distance])
       var gares_2 = liste_station
                         .map((liste_station) => ({
                           ...liste_station,
@@ -81,7 +80,6 @@ export default function Stops_nom({type}) {
   function deg2rad(deg) {
     return deg * (Math.PI/180)
   }
-  console.log(recherche)
 
   return (
     <div>
@@ -94,7 +92,7 @@ export default function Stops_nom({type}) {
         <option value="carTER">Car TER</option>
         <option value="transilien">Transilien</option>
       </select>
-    
+
       à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km (à vol d'🐦) de : </p>
   <div style={{"display":"flex", "flexDirection":"row"}}>
   <ApiRequest filterOrigin={filterOrigin}/>
