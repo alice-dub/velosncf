@@ -7,16 +7,45 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
     <style>
-      body {
-        padding-bottom: 30px;
-      }
-      h1, h2, p {
+      h1, h2 {
         font-family: sans-serif;
         text-align: center;
       }
+      p {
+        font-family: sans-serif;
+      }
+
+      footer {
+        font-size:15px;
+        font-family: sans-serif;
+        font-style: italic;
+        color:gray;
+        max-width:2000px;
+      }
+
       .leaflet-container {
         height: 600px;
         width: 100%;
+      }
+      select {
+        margin:4px;
+      }
+      input, select {
+        display:initial
+      }
+
+      .button {
+        margin:0;
+        padding-top: 0px; 
+        padding-bottom: 0px;
+        height:50px;
+        font-weight: 500;
+        font-size: 14px;
+        }
+
+      .button:hover {
+        background-color: #118bee;
+        color: #fff;
       }
     </style>
 
@@ -41,7 +70,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Trajets TER</title>
+    <title>Trajets en commun</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

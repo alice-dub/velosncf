@@ -1,29 +1,29 @@
 # velosncf
 
-Le but de ce projet ? Une carte de France avec tous les trajets en train accessibles avec un vélo non démonté !
+Ce projet ? Visualiser faculement tous les trajets disponibles grâce à la SNCF ! (TGV, Intercité, TER, Car TER)
 
 Une version est disponible en ligne sur https://trainvelo.succo.fr/
 
-Ce projet s'appuie sur les GTFS téléchargeables depuis le portail opendata de la SNCF :  https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified
+Ce projet s'appuie sur les GTFS téléchargeables depuis le portail opendata de la SNCF :  https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified pour repérer tous les trajets proposés par la SNCF, et sur l' API de la BAN : https://adresse.data.gouv.fr/api-doc/adresse  permettant d'identifier les gares proches d'un lieu 
+(fortement inspiré du site https://trainvelo.fr/ )
 
-Mais comment passer d'un GTFS à une carte lisible et pas trop surchargée ? 
-Les traitements suivants ont été appliqués : 
+Le dossier **scripts** contient un script python permettant de créer les fichiers geojson utilisés par l'app à partir des données gtfs (fichiers à copier coller dans le dossier select-gare/public/data où l'app va ensuite les chercher. Le fichier liste_station.json, servant pour l'autocomplete et le calcul des distances lieu / gares est à mettre dans le dossier select-gare/src/components)
 
-* Pour chaque route, récupération des trajets associés : 
-    * Pour les TERs on suppose que toutes les routes suivent le meme trajet (avec plus ou moins de stops) : on selectionne alors le trajet avec le plus d'arret comme "représentant de la route"
-    * Pour les intercités et TGV cette méthode n'est pas applicable car supprime les différentes branches (par exemple le TGV de la route Bretagne se sépare à Rennes : un trajet dessert la bretagne Nord et l'autre la Bretagne Sud : on veut bien garder les deux trajets !). On sélectionne alors comme "représentants de la route" les trajets avec le plus d'arrets pour un meme couple (depart, arrivée)
+Le dossier **select-gare** contient l'application react js, à lancer en local avec la commande npm start.
 
+TODO : 
 
-* Pour chaque route, regroupement des sous-trajets associés :
-  * Pour le TGV de la route Bretagne, on veut inclure le trajet "Paris - Rennes" dans un autre trajet, par exemple "Paris Quimper", puique le paris Quimper s'arrête aussi à Rennes
+* Le but initial du projet était de faciliter les trajets train avec vélo non démonté 🚲 (avec place réservable ou non). En effet cette recherche est compliquée car le site de la SNCF ne permet pas de faire un voyage combinant les places vélo réservables (intecité par ex.) et non (TER par ex.).
+Je n'ai pas réussi à récupérer cette information (les GTFS de la SNCF n'intègrent pas, à mon grand désespoir, le champ *bikes_allowed*, et aucun champ GTFS ne semble prévu pour indiquer si le moyen de transport nécessite ou non une réservation). **Si vous avez des idées / indications pour m'aider sur ces sujets je suis très preneuse !**
 
-* Pour des routes différentes regroupent des trajets identiques et sous trajets:
-  * Parfois 2 routes ont en fait des trajets identiques ou des sous trajets: par exemple le trajet Paris - Latour de Carole apparait à la fois dans la route "Paris Austerlitz - Lourdes" et dans la route "Paris-Toulouse-Cerbère/Latour de Carol/Rodez/Albi". On regroupe donc ces deux routes en une seule meme route contenant l'ensemble des arrets des deux trajets. 
-  * Cette moulinette fonctionne par itération et tourne deux fois
- 
-* Calcul du tracé de des trajets agrégés : 
-  * On a ici créé des sortes de "supers trajets" regroupant tous les arrêts des trajets ayant les mêmes points de départ ou d'arrivée ou bien des étant des sous trajets d'autres trajets. On doit alors reconstituer les tracés liant tous les arrêts. On part pour cela de l'hypothese suivante :  le train va toujours à la gare la plus proche de la gare où il est arrété.
+* La carte permet d'identifier un trajet sympa : Permettre d'accéder aux horaires du train / car correspondant serait utile ! 
+  * En créant un lien directement vers la fiche horaire de SNCF connect de type https://www.sncf-connect.com/train/horaires/paris/abbeville. Problème : cette carte existe elle pour toutes les gares ? Comment formater le lien sncf-connect.com/train/horaires/%s/%s pour accéder à une page valide ? 
+  * En exploitant les données horaires présentes dans les GTFS : un autre chantier, qui nécessite surement de passer par une base de donnée ? 
+  * Autre piste : utiliser l'API navitia… quelle faisabilité ? 
 
-TO DO:
-* Le nettoyage des données est satisfaisant sur les JDD des TERs et des intercités mais pas sur les données qui ont très peu de routes avec des trajets très différents : il faudrait réduire la notion des sous trajets 
-* Développer une fonctionnalité (où trouver l'information ?) permettant de déterminer si la ligne TGV accepte - ou pas- des vélos dépliés 
+* Elargir les données de la carte à d'autres opérateurs (Flixbus par exemple) ou sur une échelle plus importante (Europe)
+
+* Harmoniser les noms des gares, qui n'est pas le même dans les différentes bases de la SNCF. Par exemple pour Bercy : 
+![Screenshot](screenshot.jpeg)
+
+* Permettre l'affichage d'indicateurs pertinents (durée min/max/moyenne du trajes, nombre de trajet par jour…)
