@@ -17,9 +17,9 @@ TODO :
 Je n'ai pas réussi à récupérer cette information (les GTFS de la SNCF n'intègrent pas, à mon grand désespoir, le champ *bikes_allowed*, et aucun champ GTFS ne semble prévu pour indiquer si le moyen de transport nécessite ou non une réservation). **Si vous avez des idées / indications pour m'aider sur ces sujets je suis très preneuse !**
 
 * La carte permet d'identifier un trajet sympa : Permettre d'accéder aux horaires du train / car correspondant serait utile ! 
-  ** En créant un lien directement vers la fiche horaire de SNCF connect de type https://www.sncf-connect.com/train/horaires/paris/abbeville. Problème : cette carte existe elle pour toutes les gares ? Comment formater le lien sncf-connect.com/train/horaires/%s/%s pour accéder à une page valide ? 
-  ** En exploitant les données horaires présentes dans les GTFS : un autre chantier, qui nécessite surement de passer par une base de donnée ? 
-  ** Autre piste : utiliser l'API navitia… quelle faisabilité ? 
+  * En créant un lien directement vers la fiche horaire de SNCF connect de type https://www.sncf-connect.com/train/horaires/paris/abbeville. Problème : cette carte existe elle pour toutes les gares ? Comment formater le lien sncf-connect.com/train/horaires/%s/%s pour accéder à une page valide ? 
+  * En exploitant les données horaires présentes dans les GTFS : un autre chantier, qui nécessite surement de passer par une base de donnée ? 
+  * Autre piste : utiliser l'API navitia… quelle faisabilité ? 
 
 * Elargir les données de la carte à d'autres opérateurs (Flixbus par exemple) ou sur une échelle plus importante (Europe)
 
