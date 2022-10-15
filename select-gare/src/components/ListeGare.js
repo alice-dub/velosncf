@@ -18,6 +18,8 @@ export default function Stops_nom({type}) {
     setFilter(filter);
   };
 
+  var liste_station_select = liste_station.filter((liste_station) => liste_station.transport.includes(transport))
+
   function changeDistance(event) {
     setDistance(event.target.value) //update your value here
   }
@@ -83,17 +85,17 @@ export default function Stops_nom({type}) {
 
   return (
     <div>
-  <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
-  <p> Je veux les gares 
-  <select value={transport} onChange={changeTransport}>
-        <option value="TER" selected>TER</option>
-        <option value="intercite">Intercité</option>
-        <option value="TGV">TGV</option>
-        <option value="carTER">Car TER</option>
-        <option value="transilien">Transilien</option>
+  <p> Je m'intéresse aux  
+    <select value={transport} onChange={changeTransport}>
+        <option value="TER" selected>Train TER 🚆</option>
+        <option value="intercite">Intercité 🚆</option>
+        <option value="TGV">TGV 🚄</option>
+        <option value="carTER">Car TER 🚍</option>
+        <option value="transilien">Transilien 🚆</option>
       </select>
-
-      à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km (à vol d'🐦) de : </p>
+  </p>
+  <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
+  <p> Je veux les gares à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km (à vol d'🐦) de : </p>
   <div style={{"display":"flex", "flexDirection":"row"}}>
   <ApiRequest filterOrigin={filterOrigin}/>
   <button className="button" onClick={calculFiltre} >Filtre</button>
@@ -107,13 +109,13 @@ export default function Stops_nom({type}) {
                 onChange={(event: any, newValue: string | null) => {
                 setActiveCategory(newValue);
                 }}
-                options={liste_station}
-                getOptionLabel={liste_station => liste_station.stop_name}
+                options={liste_station_select}
+                getOptionLabel={liste_station_select => liste_station_select.stop_name}
                 renderInput={params => (
                 <TextField {...params} label= {type} margin="normal" />
                 )}/>
 		    <Maps
-			    filter = {activeCategory} recherche = {recherche}/>
+			    filter = {activeCategory} recherche = {recherche} transport = {transport} />
     </div>
   );
 }
