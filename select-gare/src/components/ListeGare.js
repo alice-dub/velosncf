@@ -12,6 +12,7 @@ export default function Stops_nom({type}) {
   const [info, setInfo] = useState("");
   const [distance, setDistance] = useState(5);
   const [transport, setTransport] = useState("TER");
+  const [recherche, setRecherche] = useState([0, 0 ,0]);
 
   const filterOrigin = (filter) => {
     setFilter(filter);
@@ -26,16 +27,15 @@ export default function Stops_nom({type}) {
   }
 
   function calculFiltre() {
-    console.log("coucou")
-    console.log("Filtre")
-    console.log(filter)
-    console.log(filter.type)
     if (filter.length == 0) {
       setInfo(" Veuillez renseigner une adresse pour pouvoir filtrer les gares à proximité");
+      setRecherche([0, 0 ,0])
     }
     else {
       setInfo("")
-      console.log(liste_station)
+      console.log(filter)
+      const [long, lat] = filter.geometry.coordinates
+      setRecherche(Array(lat, long, distance))
       var gares_2 = liste_station
                         .map((liste_station) => ({
                           ...liste_station,
@@ -47,14 +47,12 @@ export default function Stops_nom({type}) {
                         .map(function(el) {
                           return {"stop_name" : el.stop_name};
                         });
-      console.log(gares_2)
-      console.log(gares_2.length)
       if (gares_2.length > 10) {
-        setInfo("Plus de 10 gares correspondant à vos critères de recherche ont été trouvés ! Les 10 gares les plus proches ont été sélectionnées.");
+        setInfo("Plus de 10 gares correspondant aux critères de recherche ont été trouvées ! Les 10 gares les plus proches ont été sélectionnées.");
         gares_2 = gares_2.slice(0, 10); 
       };
       if (gares_2.length === 0) {
-        setInfo("Aucune gare correpondant aux critère n'a été trouvée. Vous pouvez ");
+        setInfo("Aucune gare correpondant aux critères n'a été trouvée. Vous pouvez élargir le rayon de recherche.");
       };
       setActiveCategory(gares_2)
     }
@@ -83,6 +81,7 @@ export default function Stops_nom({type}) {
   function deg2rad(deg) {
     return deg * (Math.PI/180)
   }
+  console.log(recherche)
 
   return (
     <div>
@@ -96,7 +95,7 @@ export default function Stops_nom({type}) {
         <option value="transilien">Transilien</option>
       </select>
     
-      à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km de : </p>
+      à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km (à vol d'🐦) de : </p>
   <div style={{"display":"flex", "flexDirection":"row"}}>
   <ApiRequest filterOrigin={filterOrigin}/>
   <button className="button" onClick={calculFiltre} >Filtre</button>
@@ -116,7 +115,7 @@ export default function Stops_nom({type}) {
                 <TextField {...params} label= {type} margin="normal" />
                 )}/>
 		    <Maps
-			    filter = {activeCategory}/>
+			    filter = {activeCategory} recherche = {recherche}/>
     </div>
   );
 }

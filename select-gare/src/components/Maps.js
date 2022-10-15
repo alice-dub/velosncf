@@ -1,4 +1,4 @@
-import { MapContainer, LayersControl, TileLayer, GeoJSON } from 'react-leaflet'
+import { MapContainer, LayersControl, TileLayer, GeoJSON, Circle } from 'react-leaflet'
 import L from 'leaflet'
 import React from 'react';
 import rails from './rails.json'
@@ -63,6 +63,7 @@ class Maps extends React.Component {
 
   componentDidMount() {
     this.fetchGares(this.props.filter);
+    console.log(this.props.recherche)
   }
 
   // setState() can't be called in componentDidUpdate()
@@ -70,7 +71,6 @@ class Maps extends React.Component {
     if (this.props.filter !== prevProps.filter) {
       this.fetchGares(this.props.filter);
     }
-
   }
 
   fetchGares(filtre) {
@@ -133,7 +133,14 @@ class Maps extends React.Component {
     }
   }
 
-  render() {
+  render() { 
+    console.log(this.props.recherche[2])
+    let circle = this.props.recherche[2] != 0?  <Circle
+    center={this.props.recherche.slice(0,2)}
+    pathOptions={{ fillColor: 'blue' }}
+    radius={this.props.recherche[2]*1000}
+/> :  <></>
+console.log(circle)
   return (
     <MapContainer center={position} zoom={6}>
       <TileLayer
@@ -142,6 +149,13 @@ class Maps extends React.Component {
       />
     <GeoJSON data={rails} interactive={false} style={feature => ({ color: "grey", weight:"2"})}/>
     <LayersControl collapsed={false}>
+      <LayersControl.Overlay checked name="Périmètre de recherche 📍">
+      <Circle
+    center={this.props.recherche.slice(0,2)}
+    pathOptions={{ fillColor: 'blue' }}
+    radius={this.props.recherche[2]*1000}
+/>
+      </LayersControl.Overlay>
       <LayersControl.Overlay checked name="🚲 ❤️ Train TER 🚆">
       <GeoJSON key={this.state.data_ter} data={this.state.data_ter} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
       </LayersControl.Overlay>
