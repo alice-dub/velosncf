@@ -24,6 +24,6 @@ Je n'ai pas réussi à récupérer cette information (les GTFS de la SNCF n'int�
 * Elargir les données de la carte à d'autres opérateurs (Flixbus par exemple) ou sur une échelle plus importante (Europe)
 
 * Harmoniser les noms des gares, qui n'est pas le même dans les différentes bases de la SNCF. Par exemple pour Bercy : 
-![Screenshot](screenshot.jpeg)
+![Screenshot](Screenshot.jpeg)
 
 * Permettre l'affichage d'indicateurs pertinents (durée min/max/moyenne du trajes, nombre de trajet par jour…)
