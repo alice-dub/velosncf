@@ -87,11 +87,11 @@ export default function Stops_nom({type}) {
     <div>
   <p> Je m'intéresse aux  
     <select value={transport} onChange={changeTransport}>
-        <option value="TER" selected>Train TER 🚆</option>
-        <option value="intercite">Intercité 🚆</option>
-        <option value="TGV">TGV 🚄</option>
-        <option value="carTER">Car TER 🚍</option>
-        <option value="transilien">Transilien 🚆</option>
+        <option value="TER" selected>Trains TER 🚆</option>
+        <option value="intercite">Intercités 🚆</option>
+        <option value="TGV">TGVs 🚄</option>
+        <option value="carTER">Cars TER 🚍</option>
+        <option value="transilien">Transiliens 🚆</option>
       </select>
   </p>
   <h4> Pré-filtrage des gares en fonction d'un lieu </h4>

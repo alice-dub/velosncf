@@ -63,7 +63,7 @@ class Maps extends React.Component {
 
   // setState() can't be called in componentDidUpdate()
   componentDidUpdate(prevProps) {
-    if (this.props.filter !== prevProps.filter) {
+    if (this.props !== prevProps) {
       this.fetchGares(this.props.filter);
     }
   }
