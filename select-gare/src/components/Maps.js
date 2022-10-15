@@ -53,11 +53,7 @@ class Maps extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data_ter:'',
-      data_car:'',
-      data_intercite:'',
-      data_tgv:'',
-      data_transilien:''
+      data_ter:''
     };
   }
 
@@ -75,58 +71,14 @@ class Maps extends React.Component {
 
   fetchGares(filtre) {
     this.setState({
-      data_ter: [],
-      data_car: [],
-      data_intercite:[],
-      data_tgv:[],
-      data_transilien:[]
+      data_ter: []
     });
     for(let i = 0; i < filtre.length; i++){
-      fetch(`data/gares_accessibles_TER/${encodeURIComponent(filtre[i].stop_name)}.json`)
+      fetch(`data/gares_accessibles_${encodeURIComponent(this.props.transport)}/${encodeURIComponent(filtre[i].stop_name)}.json`)
       . then(res => res.json())
        .then(json => {
             this.setState({
               data_ter: [...this.state.data_ter, json]
-            });
-        })
-        .catch(err => console.error(err));
-    }
-    for(let i = 0; i < filtre.length; i++){
-      fetch(`data/gares_accessibles_carTER/${encodeURIComponent(filtre[i].stop_name)}.json`)
-      . then(res => res.json())
-       .then(json => {
-            this.setState({
-              data_car: [...this.state.data_car, json]
-            });
-        })
-        .catch(err => console.error(err));
-    }
-    for(let i = 0; i < filtre.length; i++){
-      fetch(`data/gares_accessibles_intercite/${encodeURIComponent(filtre[i].stop_name)}.json`)
-      . then(res => res.json())
-       .then(json => {
-            this.setState({
-              data_intercite: [...this.state.data_intercite, json]
-            });
-        })
-        .catch(err => console.error(err));
-    }
-    for(let i = 0; i < filtre.length; i++){
-      fetch(`data/gares_accessibles_TGV/${encodeURIComponent(filtre[i].stop_name)}.json`)
-      . then(res => res.json())
-       .then(json => {
-            this.setState({
-              data_tgv: [...this.state.data_tgv, json]
-            });
-        })
-        .catch(err => console.error(err));
-    }
-    for(let i = 0; i < filtre.length; i++){
-      fetch(`data/gares_accessibles_transilien/${encodeURIComponent(filtre[i].stop_name)}.json`)
-      . then(res => res.json())
-       .then(json => {
-            this.setState({
-              data_transilien: [...this.state.data_transilien, json]
             });
         })
         .catch(err => console.error(err));
@@ -148,7 +100,7 @@ console.log(circle)
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
     <GeoJSON data={rails} interactive={false} style={feature => ({ color: "grey", weight:"2"})}/>
-    <LayersControl collapsed={false}>
+    <LayersControl collapsed={true}>
       <LayersControl.Overlay checked name="Périmètre de recherche 📍">
       <Circle
     center={this.props.recherche.slice(0,2)}
@@ -156,20 +108,8 @@ console.log(circle)
     radius={this.props.recherche[2]*1000}
 />
       </LayersControl.Overlay>
-      <LayersControl.Overlay checked name="🚲 ❤️ Train TER 🚆">
+      <LayersControl.Overlay checked name="Gares accessibles 🚉">
       <GeoJSON key={this.state.data_ter} data={this.state.data_ter} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
-      </LayersControl.Overlay>
-      <LayersControl.Overlay checked name="🚲 ❤️ Intercité 🚆">
-      <GeoJSON key={this.state.data_intercite} data={this.state.data_intercite} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
-      </LayersControl.Overlay>
-      <LayersControl.Overlay checked name="🚲 💔 TGV 🚄">
-      <GeoJSON key={this.state.data_tgv} data={this.state.data_tgv} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
-      </LayersControl.Overlay>
-      <LayersControl.Overlay checked name="🚲 ❤️ Transilien 🚆">
-      <GeoJSON key={this.state.data_transilien} data={this.state.data_transilien} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
-      </LayersControl.Overlay>
-      <LayersControl.Overlay checked name= "🚲 💔 Car TER 🚍">
-      <GeoJSON key={this.state.data_car} data={this.state.data_car} onEachFeature={onEachFeature} pointToLayer={pointToLayer}/>
       </LayersControl.Overlay>
     </LayersControl>
     </MapContainer>
