@@ -97,7 +97,7 @@ export default function Stops_nom({type}) {
   </p>
   <h4> Pré-filtrage des gares en fonction d'un lieu </h4>
   <p> Je veux les gares à moins de <input onChange={changeDistance} type="number" id="quantity" name="quantity" min="5" max="50" value={distance} size="5"></input> km (à vol d'🐦) de : </p>
-  <div style={{"display":"flex", "flexWrap":"wrap", "flexDirection":"row"}}>
+  <div style={{"display":"flex",  "flexDirection":"row"}}>
   <ApiRequest filterOrigin={filterOrigin}/>
   <button className="button" onClick={calculFiltre} >Filtre</button>
   <p  style={{color:"red", marginLeft:"5px"}}>  {info}</p>
@@ -115,7 +115,7 @@ export default function Stops_nom({type}) {
                 renderInput={params => (
                 <TextField {...params} label= {type} margin="normal" />
                 )}/>
-      <div style={{"display":"flex", "flexDirection":"row"}}>
+      <div style={{"display":"flex", "flexWrap":"wrap","flexDirection":"row"}}>
 		    <Maps
 			    filter = {activeCategory} recherche = {recherche} transport = {transport} />
         <Legende  transport = {transport}/>

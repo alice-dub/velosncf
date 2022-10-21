@@ -5,7 +5,7 @@ function Legende({transport}) {
     var param = periode_analyse[transport]
     console.log(param)
     return (
-    <div style={{maxWidth: "400px", marginLeft:"2px;"}}>
+    <div style={{maxWidth: "400px", marginLeft:"0.5%"}}>
         <h5> Légende</h5>
         <p style={{fontSize: "13px"}}> Calcul sur la période {param.debut} - {param.fin} </p>
         <table>
