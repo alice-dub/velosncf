@@ -1,2 +1,3 @@
 agency_id,agency_name,agency_url,agency_timezone,agency_lang
-OCESN,SNCF,http://www.sncf.com,Europe/Paris,fr
+1187,SNCF,http://www.sncf.com,Europe/Paris,fr
+OCEdefault,OCEdefault,http://www.sncf.com,Europe/Paris,fr

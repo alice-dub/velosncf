@@ -6,8 +6,8 @@ import rails from './rails.json'
 const position = [47, 3]
 
 const Icon1 = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'images/icone_1.png',
+  shadowUrl: 'images/marker-shadow.png',
   iconSize: [20, 30],
   iconAnchor: [8, 30],
   popupAnchor: [1, -34],
@@ -15,8 +15,44 @@ const Icon1 = new L.Icon({
 });
 
 const Icon2 = new L.Icon({
-iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconUrl: 'images/icone_2.png',
+  shadowUrl: 'images/marker-shadow.png',
+  iconSize: [20, 30],
+  iconAnchor: [8, 30],
+  popupAnchor: [1, -34],
+  shadowSize: [10, 30]
+});
+
+const Icon3 = new L.Icon({
+  iconUrl: 'images/icone_3.png',
+  shadowUrl: 'images/marker-shadow.png',
+  iconSize: [20, 30],
+  iconAnchor: [8, 30],
+  popupAnchor: [1, -34],
+  shadowSize: [10, 30]
+});
+
+const Icon4 = new L.Icon({
+  iconUrl: 'images/icone_4.png',
+  shadowUrl: 'images/marker-shadow.png',
+  iconSize: [20, 30],
+  iconAnchor: [8, 30],
+  popupAnchor: [1, -34],
+  shadowSize: [10, 30]
+});
+
+const Icon5 = new L.Icon({
+  iconUrl: 'images/icone_5.png',
+  shadowUrl: 'images/marker-shadow.png',
+  iconSize: [20, 30],
+  iconAnchor: [8, 30],
+  popupAnchor: [1, -34],
+  shadowSize: [10, 30]
+});
+
+const IconDepart = new L.Icon({
+iconUrl: 'images/icone_depart.png',
+shadowUrl: 'images/marker-shadow.png',
 iconSize: [25, 41],
 iconAnchor: [12, 41],
 popupAnchor: [1, -34],
@@ -25,27 +61,53 @@ shadowSize: [41, 41]
 
 function pointToLayer(feature, latlng)  {
 return L.marker(latlng, {
-  icon: choix_icone(feature.properties.type)
+  icon: choix_icone(feature.properties.type, feature.properties.nombre_trajet_moyen)
 });
 }
 
-function choix_icone(choix) {
-  if (choix === "Gare accessible") {
-    return Icon1
+function choix_icone(choix, nombre) {
+  if (choix === "Gare sélectionnée") {
+    return IconDepart
   }
   else {
-    return Icon2
+    if (nombre < 1) {
+      return Icon1
+    }
+
+    if (nombre < 3) {
+      return Icon2
+    }
+
+    if (nombre < 6) {
+      return Icon3
+    }
+
+    if (nombre < 10 ) {
+      return Icon4
+    }
+
+    else {
+      return Icon5
+    }
   }
 
 }
 
 function onEachFeature(feature, layer) {
-  if (feature.properties) {
+  if (feature.properties.type === "Gare sélectionnée") {
       layer.bindPopup(
-        "Gare : " + feature.properties.stop_name
-         + "<br> Gare de départ : " + feature.properties.start
+         "<br> Gare de départ : " + feature.properties.start
          + "<br> Moyen de transport : " + feature.properties.transport_legende
+         + "<br> Nombre moyen de départs quotidiens: " + feature.properties.nombre_trajet_moyen
         );
+  }
+  else {
+    layer.bindPopup(
+      "Gare : " + feature.properties.stop_name
+      + "<br> Gare de départ : " + feature.properties.start
+      + "<br> Moyen de transport : " + feature.properties.transport_legende
+      + "<br> Nombre moyen de dessertes quotidiennes : " + feature.properties.nombre_trajet_moyen
+    )
   }
 }
 
@@ -86,7 +148,7 @@ class Maps extends React.Component {
 
   render() {
   return (
-    <MapContainer center={position} zoom={6}>
+    <MapContainer style={{flexGrow: "6"}} center={position} zoom={6}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
