@@ -7,7 +7,12 @@ Une version est disponible en ligne sur https://trainvelo.succo.fr/
 Ce projet s'appuie sur les GTFS téléchargeables depuis le portail opendata de la SNCF :  https://ressources.data.sncf.com/explore/?q=gtfs&sort=modified pour repérer tous les trajets proposés par la SNCF, et sur l' API de la BAN : https://adresse.data.gouv.fr/api-doc/adresse  permettant d'identifier les gares proches d'un lieu 
 (fortement inspiré du site https://trainvelo.fr/ )
 
-Le dossier **scripts** contient un script python permettant de créer les fichiers geojson utilisés par l'app à partir des données gtfs (fichiers à copier coller dans le dossier select-gare/public/data où l'app va ensuite les chercher. Le fichier liste_station.json, servant pour l'autocomplete et le calcul des distances lieu / gares est à mettre dans le dossier select-gare/src/components)
+Le dossier **scripts** contient les scripts permettant de récupérer les données :
+* Les fichiers geojson utilisés par l'app à partir des données gtfs sont générés dans le dossier select-gare/public/data
+* Le fichier liste_station.json, qui sert pour l'autocomplete et le calcul des distances lieu / gares est généré dans le dossier select-gare/src/components
+* Le fichier periode_analyse.json recupère les périodes couvertes par les fichiers gtfs. 
+
+Pour initialiser les données, lancer le script bash historisation.sh dans le dossier
 
 Le dossier **select-gare** contient l'application react js, à lancer en local avec la commande npm start.
 

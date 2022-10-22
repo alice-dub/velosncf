@@ -1,11 +1,15 @@
 import json
 import pandas as pd
 import numpy as np
+import sys
 
 element = []
 type_fichier = "stops"
-liste_moyens = ["TER", "TGV", "intercite", "transilien", "carTER"]
-#liste_moyens = ["TGV"]
+#liste_moyens = ["TER", "TGV", "intercite", "transilien", "carTER"]
+liste_moyens = ["TGV"]
+
+
+###TO DO : Ajouter les exceptions pour gérer les erreurs d'API !!
 
 mise_en_forme = {"TER" : "🚲 ❤️ Train TER 🚆",\
                 "TGV" : "🚲 💔 TGV 🚄",\
@@ -25,16 +29,16 @@ for moyen in liste_moyens:
         moyen2 = "TER"
     else:
         moyen2 = moyen
-    data = pd.read_csv('{}/{}.txt'.format(moyen2, type_fichier))
+    data = pd.read_csv('historiques/{}/{}/{}.txt'.format(sys.argv[1],moyen2, type_fichier))
     data["stop_name"] = data["stop_name"].replace("/", "-", regex=True)
     stop_names = data['stop_name'].unique().tolist()
-    data_times = pd.read_csv('{}/stop_times.txt'.format(moyen2))
+    data_times = pd.read_csv('historiques/{}/{}/stop_times.txt'.format(sys.argv[1],moyen2))
     
-    trips = pd.read_csv('{}/trips.txt'.format(moyen2))
+    trips = pd.read_csv('historiques/{}/{}/trips.txt'.format(sys.argv[1], moyen2))
     trips = trips[["route_id", "trip_id", "service_id"]]
-    routes = pd.read_csv('{}/routes.txt'.format(moyen2))
+    routes = pd.read_csv('historiques/{}/{}/routes.txt'.format(sys.argv[1],moyen2))
     routes = routes[["route_id", "route_type"]]
-    services = pd.read_csv('{}/calendar_dates.txt'.format(moyen2))
+    services = pd.read_csv('historiques/{}/{}/calendar_dates.txt'.format(sys.argv[1], moyen2))
     services = services[["service_id","date"]]
     debut = str(services["date"].min())
     fin = str(services["date"].max())
@@ -77,47 +81,48 @@ for moyen in liste_moyens:
             services_selected = services[services["service_id"].isin(services_ids)]
             nombre_trajets = len(services_selected)
             nombre_trajets_moyen = round(nombre_trajets / nombre_jours_total,2)
-
-            #Creation du pin point pour la gare choisie
-            carac_route = {}
-            carac_route["type"] = "Feature"
-            carac_route["properties"] = {}
-            carac_route["properties"]["start"] = stop_name
-            carac_route["properties"]["stop_name"] = stop_name
-            carac_route["properties"]["type"] = "Gare sélectionnée"
-            carac_route["properties"]["transport"] = moyen
-            carac_route["properties"]["nombre_trajet_moyen"] = nombre_trajets_moyen
-            carac_route["properties"]["transport_legende"] = mise_en_forme[moyen]
-            carac_route["geometry"] = {}
-            carac_route["geometry"]["type"] = "Point"
-            carac_route["geometry"]["coordinates"] = coordonnees
-            geojson["features"].append(carac_route)
-            #Creation du pin point pour les autres gares (pour l instant pas d implementation départ/arrivée)
-            for gare in autres_arrets:
-                #Calcul du nombre de trains qui font ce trajet
-                data_deux_stops = data_times_stops[(data_times_stops['stop_name'] == gare)]
-                services_ids = data_deux_stops['service_id'].unique().tolist()
-                services_selected = services[services["service_id"].isin(services_ids)]
-                nombre_trajets = len(services_selected)
-                nombre_trajets_moyen = round(nombre_trajets / nombre_jours_total,2)
-                liste_nombre.append(nombre_trajets_moyen)
+            if nombre_trajets_moyen > 0.1: #Si inférieur on considère qu'il sagit d'une erreur de données
+                #Creation du pin point pour la gare choisie
                 carac_route = {}
                 carac_route["type"] = "Feature"
                 carac_route["properties"] = {}
                 carac_route["properties"]["start"] = stop_name
-                carac_route["properties"]["stop_name"] = gare
-                carac_route["properties"]["type"] = "Gare accessible"
+                carac_route["properties"]["stop_name"] = stop_name
+                carac_route["properties"]["type"] = "Gare sélectionnée"
                 carac_route["properties"]["transport"] = moyen
                 carac_route["properties"]["nombre_trajet_moyen"] = nombre_trajets_moyen
                 carac_route["properties"]["transport_legende"] = mise_en_forme[moyen]
                 carac_route["geometry"] = {}
                 carac_route["geometry"]["type"] = "Point"
-                carac_route["geometry"]["coordinates"] = [data[data["stop_name"] == gare]["stop_lon"].iloc[0],\
-                                                            data[data["stop_name"] == gare]["stop_lat"].iloc[0]]
+                carac_route["geometry"]["coordinates"] = coordonnees
                 geojson["features"].append(carac_route)
+                #Creation du pin point pour les autres gares (pour l instant pas d implementation départ/arrivée)
+                for gare in autres_arrets:
+                    #Calcul du nombre de trains qui font ce trajet
+                    data_deux_stops = data_times_stops[(data_times_stops['stop_name'] == gare)]
+                    services_ids = data_deux_stops['service_id'].unique().tolist()
+                    services_selected = services[services["service_id"].isin(services_ids)]
+                    nombre_trajets = len(services_selected)
+                    nombre_trajets_moyen = round(nombre_trajets / nombre_jours_total,2)
+                    if nombre_trajets_moyen > 0.1: #Si inférieur on considere qu li s'agit d'une erreur de données -> trop peu de trajet
+                        liste_nombre.append(nombre_trajets_moyen)
+                        carac_route = {}
+                        carac_route["type"] = "Feature"
+                        carac_route["properties"] = {}
+                        carac_route["properties"]["start"] = stop_name
+                        carac_route["properties"]["stop_name"] = gare
+                        carac_route["properties"]["type"] = "Gare accessible"
+                        carac_route["properties"]["transport"] = moyen
+                        carac_route["properties"]["nombre_trajet_moyen"] = nombre_trajets_moyen
+                        carac_route["properties"]["transport_legende"] = mise_en_forme[moyen]
+                        carac_route["geometry"] = {}
+                        carac_route["geometry"]["type"] = "Point"
+                        carac_route["geometry"]["coordinates"] = [data[data["stop_name"] == gare]["stop_lon"].iloc[0],\
+                                                                    data[data["stop_name"] == gare]["stop_lat"].iloc[0]]
+                    geojson["features"].append(carac_route)
 
-            with open('gares_accessibles_{}/{}.json'.format(moyen, stop_name), 'wt', encoding='utf8') as fp:
-                json.dump(geojson, fp)
+                with open('gares_accessibles_{}/{}.json'.format(moyen, stop_name), 'w', encoding='utf8') as fp:
+                    json.dump(geojson, fp)
 
     if data_index is None:
         data_index = data[data["stop_name"].isin(liste_noms)][["stop_name", "stop_lon", "stop_lat"]].drop_duplicates().sort_values(by="stop_name")
@@ -134,8 +139,11 @@ data_index_final3 = pd.merge(data_index_final2, data_index_final, on="stop_name"
 liste_nombre_arr = np.asarray(liste_nombre)
 print(np.percentile(liste_nombre_arr, np.arange(0, 100, 20)))
 
-with open('liste_station.json', 'wt', encoding='utf8') as fp:
+with open('liste_station.json', 'w', encoding='utf8') as fp:
     data_index_final3.to_json(fp, orient="records", force_ascii=False)
 
-with open('periode_analyse.json', 'wt', encoding='utf8') as fp:
+with open('periode_analyse.json', 'w', encoding='utf8') as fp:
+    json.dump(periode_analyse,fp)
+
+with open('test.txt', 'wt', encoding='utf8') as fp:
     json.dump(periode_analyse,fp) 

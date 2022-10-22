@@ -1,5 +1,0 @@
-agency_id,agency_name,agency_url,agency_timezone,agency_lang
-1187,SNCF,http://www.sncf.com,Europe/Paris,fr
-FR:Authority::71B476C8-63B7-459C-AD49-2ED21FE30AB1:,Conseil Régional Bourgogne - Franche-Comté,http://www.sncf.com,Europe/Paris,fr
-FR:Authority::7A842934-E342-4D4F-AF8D-8B4C404FFBC4:,Conseil Régional Auvergne - Rhône-Alpes,http://www.sncf.com,Europe/Paris,fr
-OCEdefault,OCEdefault,http://www.sncf.com,Europe/Paris,fr

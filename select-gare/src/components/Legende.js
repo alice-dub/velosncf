@@ -1,9 +1,7 @@
 import periode_analyse from './periode_analyse.json'
 
 function Legende({transport}) {
-    console.log(transport)
     var param = periode_analyse[transport]
-    console.log(param)
     return (
     <div style={{maxWidth: "400px", marginLeft:"0.5%"}}>
         <h5> Légende</h5>

@@ -73,24 +73,19 @@ function choix_icone(choix, nombre) {
     if (nombre < 1) {
       return Icon1
     }
-
     if (nombre < 3) {
       return Icon2
     }
-
-    if (nombre < 6) {
+    if (nombre < 5) {
       return Icon3
     }
-
     if (nombre < 10 ) {
       return Icon4
     }
-
     else {
       return Icon5
     }
   }
-
 }
 
 function onEachFeature(feature, layer) {
