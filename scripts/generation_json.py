@@ -33,7 +33,7 @@ for moyen in liste_moyens:
     data["stop_name"] = data["stop_name"].replace("/", "-", regex=True)
     stop_names = data['stop_name'].unique().tolist()
     data_times = pd.read_csv('historiques/{}/{}/stop_times.txt'.format(sys.argv[1],moyen2))
-    
+
     trips = pd.read_csv('historiques/{}/{}/trips.txt'.format(sys.argv[1], moyen2))
     trips = trips[["route_id", "trip_id", "service_id"]]
     routes = pd.read_csv('historiques/{}/{}/routes.txt'.format(sys.argv[1],moyen2))
@@ -43,7 +43,7 @@ for moyen in liste_moyens:
     debut = str(services["date"].min())
     fin = str(services["date"].max())
     periode_analyse[moyen]["debut"] = "{}/{}/{}".format(debut[6:8],debut[4:6],debut[:4])
-    periode_analyse[moyen]["fin"] = "{}/{}/{}".format(fin[6:8],fin[4:6],fin[:4]) 
+    periode_analyse[moyen]["fin"] = "{}/{}/{}".format(fin[6:8],fin[4:6],fin[:4])
     nombre_jours_total = len(services["date"].unique()) #Hypothese : des trains circulent tous les jours
     data_times = pd.merge(data_times, trips, how="left", on=["trip_id"])
     data_times = pd.merge(data_times, routes, how="left", on=["route_id"])
@@ -55,7 +55,7 @@ for moyen in liste_moyens:
 
     for stop_name in stop_names:
         data_stop = data[data["stop_name"] == stop_name]
-        coordonnees = [data_stop[data_stop["stop_name"] == stop_name]["stop_lon"].iloc[0], data_stop[data_stop["stop_name"] == stop_name]["stop_lat"].iloc[0]]
+        coordonnees = data_stop["stop_lon"].iloc[0], data_stop["stop_lat"].iloc[0]]
         stop_ids = data_stop['stop_id'].unique().tolist()
         get_trips_number = data_times[data_times["stop_id"].isin(stop_ids)]
         if len(get_trips_number) > 0:
@@ -67,7 +67,7 @@ for moyen in liste_moyens:
             data_times_stops = pd.merge(data_times_stops, get_trips_number, how="left", on=["trip_id"])
             data_times_stops = data_times_stops[~data_times_stops["stop_id"].isin(stop_ids)]
             data_times_stops["categorie"] = np.where(data_times_stops["stop_sequence"]>data_times_stops["sequence_reference"],"Arrivée", "Départ")
-            
+
             data_gares = data[["stop_name", "stop_id", "stop_lon", "stop_lat"]]
             data_times_stops = pd.merge(data_times_stops, data_gares, how="left", on=["stop_id"])
             autres_arrets = data_times_stops['stop_name'].unique().tolist()
@@ -127,7 +127,7 @@ for moyen in liste_moyens:
     if data_index is None:
         data_index = data[data["stop_name"].isin(liste_noms)][["stop_name", "stop_lon", "stop_lat"]].drop_duplicates().sort_values(by="stop_name")
         data_index["transport"] = moyen
-    else: 
+    else:
         data_index2 = data[data["stop_name"].isin(liste_noms)][["stop_name", "stop_lon", "stop_lat"]].drop_duplicates().sort_values(by="stop_name")
         data_index2["transport"] = moyen
         data_index = pd.concat([data_index,data_index2]).drop_duplicates().reset_index(drop=True)
