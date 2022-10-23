@@ -55,7 +55,7 @@ for moyen in liste_moyens:
 
     for stop_name in stop_names:
         data_stop = data[data["stop_name"] == stop_name]
-        coordonnees = data_stop["stop_lon"].iloc[0], data_stop["stop_lat"].iloc[0]]
+        coordonnees = data_stop["stop_lon"].iloc[0], data_stop["stop_lat"].iloc[0]
         stop_ids = data_stop['stop_id'].unique().tolist()
         get_trips_number = data_times[data_times["stop_id"].isin(stop_ids)]
         if len(get_trips_number) > 0:
