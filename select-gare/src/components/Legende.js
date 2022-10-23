@@ -1,7 +1,14 @@
-import periode_analyse from './periode_analyse.json'
+import { useState, useEffect } from "react";
 
 function Legende({transport}) {
-    var param = periode_analyse[transport]
+    const [param, setParam] = useState([])
+
+    useEffect(() => {
+      fetch('data/periode_analyse.json')
+      .then((res) =>  res.json())
+      .then(data => setParam(data[transport]));
+      }, [transport]);
+
     return (
     <div style={{maxWidth: "400px", marginLeft:"0.5%"}}>
         <h5> Légende</h5>

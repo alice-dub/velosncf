@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Maps from './Maps'
 import ApiRequest from './ApiRequest'
 import Legende from './Legende'
-import liste_station from './liste_station.json'
+//import listestation from './listestation.json'
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 
@@ -14,12 +14,26 @@ export default function Stops_nom({type}) {
   const [distance, setDistance] = useState(5);
   const [transport, setTransport] = useState("TER");
   const [recherche, setRecherche] = useState([0, 0 ,0]);
+  const [listestation, setListestation] = useState([])
+  const [listestationfiltre, setListestationfiltre] = useState([])
+
+  useEffect(() => {
+    fetch('data/liste_station.json')
+    .then((res) =>  res.json())
+    .then(data => {
+      setListestation(data);
+      setListestationfiltre(data.filter((data2) => data2.transport.includes(transport)));
+      console.log(data);
+      console.log(data.transport)
+      console.log(transport);
+      console.log(data.filter((data2) => data2.transport.includes("TGV")));
+    });
+  }
+  , []);
 
   const filterOrigin = (filter) => {
     setFilter(filter);
   };
-
-  var liste_station_select = liste_station.filter((liste_station) => liste_station.transport.includes(transport))
 
   function changeDistance(event) {
     setDistance(event.target.value) //update your value here
@@ -27,6 +41,7 @@ export default function Stops_nom({type}) {
 
   function changeTransport(event) {
     setTransport(event.target.value) //update your value here
+    setListestationfiltre(listestation.filter((listestation) => listestation.transport.includes(event.target.value)))
   }
 
   function calculFiltre() {
@@ -38,14 +53,14 @@ export default function Stops_nom({type}) {
       setInfo("")
       const [long, lat] = filter.geometry.coordinates
       setRecherche([lat, long, distance])
-      var gares_2 = liste_station
-                        .map((liste_station) => ({
-                          ...liste_station,
-                          distance_filtre: gareDistance(liste_station, filter),
+      var gares_2 = listestation
+                        .map((listestation) => ({
+                          ...listestation,
+                          distance_filtre: gareDistance(listestation, filter),
                         }))
-                        .filter((liste_station) => liste_station.transport.includes(transport))
-                        .filter((liste_station) => (liste_station.distance_filtre < distance))
-                        .sort((liste_station) => liste_station.distance)
+                        .filter((listestation) => listestation.transport.includes(transport))
+                        .filter((listestation) => (listestation.distance_filtre < distance))
+                        .sort((listestation) => listestation.distance)
                         .map(function(el) {
                           return {"stop_name" : el.stop_name};
                         });
@@ -110,8 +125,8 @@ export default function Stops_nom({type}) {
                 onChange={(event: any, newValue: string | null) => {
                 setActiveCategory(newValue);
                 }}
-                options={liste_station_select}
-                getOptionLabel={liste_station_select => liste_station_select.stop_name}
+                options={listestationfiltre}
+                getOptionLabel={listestationfiltre => listestationfiltre.stop_name}
                 renderInput={params => (
                 <TextField {...params} label= {type} margin="normal" />
                 )}/>
