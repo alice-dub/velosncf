@@ -144,6 +144,3 @@ with open('liste_station.json', 'w', encoding='utf8') as fp:
 
 with open('periode_analyse.json', 'w', encoding='utf8') as fp:
     json.dump(periode_analyse,fp)
-
-with open('test.txt', 'wt', encoding='utf8') as fp:
-    json.dump(periode_analyse,fp) 
