@@ -1,5 +1,15 @@
+#!/usr/bin/env bash
+
 export DATE=$(date '+%Y-%m-%d')
 export DOSSIER_APP="../select-gare/public/data"
+
+if [ -z ${1+x} ];
+	then
+		echo "using default data dir: $DOSSIER_APP";
+	else
+		export DOSSIER_APP=$1
+		echo "using data dir: $DOSSIER_APP";
+fi
 
 rm -r historiques/$DATE
 mkdir -p historiques/$DATE
