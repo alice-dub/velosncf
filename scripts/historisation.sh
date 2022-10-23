@@ -1,4 +1,5 @@
 export DATE=$(date '+%Y-%m-%d')
+export DOSSIER_APP="../select-gare/public/data"
 
 rm -r historiques/$DATE
 mkdir -p historiques/$DATE
@@ -28,20 +29,20 @@ mkdir -p gares_accessibles_transilien
 
 python3 generation_json.py $DATE
 
-rm -r ../select-gare/public/data/gares_accessibles_carTER
-rm -r ../select-gare/public/data/gares_accessibles_intercite
-rm -r ../select-gare/public/data/gares_accessibles_TER
-rm -r ../select-gare/public/data/gares_accessibles_TGV
-rm -r ../select-gare/public/data/gares_accessibles_transilien
+rm -r $DOSSIER_APP/gares_accessibles_carTER
+rm -r $DOSSIER_APP/gares_accessibles_intercite
+rm -r $DOSSIER_APP/gares_accessibles_TER
+rm -r $DOSSIER_APP/gares_accessibles_TGV
+rm -r $DOSSIER_APP/gares_accessibles_transilien
 
-rm ../select-gare/src/components/liste_station.json
-rm ../select-gare/src/components/periode_analyse.json
+rm $DOSSIER_APP/liste_station.json
+rm $DOSSIER_APP/periode_analyse.json
 
-mv gares_accessibles_carTER ../select-gare/public/data/
-mv gares_accessibles_intercite ../select-gare/public/data/
-mv gares_accessibles_TER ../select-gare/public/data/
-mv gares_accessibles_TGV ../select-gare/public/data/
-mv gares_accessibles_transilien ../select-gare/public/data/
+mv gares_accessibles_carTER $DOSSIER_APP/
+mv gares_accessibles_intercite $DOSSIER_APP/
+mv gares_accessibles_TER $DOSSIER_APP/
+mv gares_accessibles_TGV $DOSSIER_APP/
+mv gares_accessibles_transilien $DOSSIER_APP/
 
-mv liste_station.json ../select-gare/src/components/
-mv periode_analyse.json ../select-gare/src/components/
+mv liste_station.json $DOSSIER_APP/
+mv periode_analyse.json $DOSSIER_APP/

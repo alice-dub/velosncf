@@ -5,8 +5,8 @@ import sys
 
 element = []
 type_fichier = "stops"
-#liste_moyens = ["TER", "TGV", "intercite", "transilien", "carTER"]
-liste_moyens = ["TGV"]
+liste_moyens = ["TER", "TGV", "intercite", "transilien", "carTER"]
+#liste_moyens = ["TGV"]
 
 
 ###TO DO : Ajouter les exceptions pour gérer les erreurs d'API !!
