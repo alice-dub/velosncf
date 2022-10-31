@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import Maps from './Maps'
 import ApiRequest from './ApiRequest'
@@ -15,18 +15,13 @@ export default function Stops_nom({type}) {
   const [transport, setTransport] = useState("TER");
   const [recherche, setRecherche] = useState([0, 0 ,0]);
   const [listestation, setListestation] = useState([])
-  const [listestationfiltre, setListestationfiltre] = useState([])
+  const listestationfiltre = useMemo(() => listestation.filter((station => station.transport.includes(transport))), [listestation, transport])
 
   useEffect(() => {
     fetch('data/liste_station.json')
     .then((res) =>  res.json())
     .then(data => {
       setListestation(data);
-      setListestationfiltre(data.filter((data2) => data2.transport.includes(transport)));
-      console.log(data);
-      console.log(data.transport)
-      console.log(transport);
-      console.log(data.filter((data2) => data2.transport.includes("TGV")));
     });
   }
   , []);
@@ -36,17 +31,16 @@ export default function Stops_nom({type}) {
   };
 
   function changeDistance(event) {
-    setDistance(event.target.value) //update your value here
+    setDistance(event.target.value)
   }
 
   function changeTransport(event) {
-    setTransport(event.target.value) //update your value here
-    setListestationfiltre(listestation.filter((listestation) => listestation.transport.includes(event.target.value)))
+    setTransport(event.target.value)
   }
 
   function calculFiltre() {
     if (filter.length === 0) {
-      setInfo(" Veuillez renseigner une adresse pour pouvoir filtrer les gares à proximité");
+      setInfo("Veuillez renseigner une adresse pour pouvoir filtrer les gares à proximité");
       setRecherche([0, 0 ,0])
     }
     else {
